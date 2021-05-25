@@ -106,9 +106,9 @@ namespace ServidorChat.Essencial.Chat
             if (rooms.Find(r => r.roomName.ToUpper() == roomName.ToUpper()) == null)
             {
                 rooms.Add(new Room() { roomName = roomName });
-                return new Response() { message = "Room: '" + roomName + "' was created with success!", success = true };
+                return new Response() { message = "A sala '" + roomName + "' foi criada com sucesso!", success = true };
             }
-            return new Response() { message = "Erro: Already existe a room with the specified name.", success = false };
+            return new Response() { message = "Erro: Já existe um sala com o nome "+ roomName + ". Selecione outro nome!", success = false };
         }
 
         public void WaitMessage(string nickName, TcpClient client)
@@ -169,9 +169,9 @@ namespace ServidorChat.Essencial.Chat
                     SendMessagePublic(user.nickName, room.roomName, user.nickName + " entrou na sala!");
                     return new Response() { message = JsonConvert.SerializeObject(room), success = true };
                 }
-                return new Response() { message = "Nick Not Found!", success = false };
+                return new Response() { message = "Apalido não encontrado!", success = false };
             }
-            return new Response() { message = "Room not found!", success = false };
+            return new Response() { message = "Sala não encontrada!", success = false };
         }
 
         public Response LeaveRoom(string nickName, string roomName)
@@ -186,14 +186,14 @@ namespace ServidorChat.Essencial.Chat
                     usersOut.Add(user);
                     room.GetAllUsers().Remove(user);
                     user.Part();
-                    return new Response() { message = "Concluded", success = true };
+                    return new Response() { message = "Concluído", success = true };
                 }
-                return new Response { message = "User not in room" };
+                return new Response { message = "Usuário não econtrado" };
             }
-            return new Response() { message = "The room dont exist enymore.", success = false };
+            return new Response() { message = "A sala não existe.", success = false };
         }
 
-        public Response Nick(string nickName, TcpClient userConnection)
+        public Response Nick(string nickName)
         {
             if (nickAvailable(nickName))
             {
@@ -206,7 +206,7 @@ namespace ServidorChat.Essencial.Chat
                 allUsers.Add(user);
                 return new Response() { message = JsonConvert.SerializeObject(user), success = true };
             }
-            return new Response() { message = "Nick Unavailable", success = false };
+            return new Response() { message = "Apelido indisponível!", success = false };
         }
 
         public void LeaveServer(string nickName)

@@ -60,13 +60,22 @@ namespace ServidorChat
                                     textRet = HttpHelper.HttpResponseMountResponse(resAdm);
                                     break;
                                 case Commands.CNOTICE:
-                                    string nickPubPri = cmd.cmd.Trim().Split(' ')[1];
-                                    string nickDestPubPri = cmd.cmd.Trim().Split(' ')[2];
-                                    string roomPubPri = cmd.cmd.Trim().Split(' ')[3];
-                                    string msgPubPri = cmd.cmd.Trim().Split(' ')[4];
-                                    serverProcess.SendMessageParticular(nickPubPri, nickDestPubPri, roomPubPri, msgPubPri.Replace("#", " "), MessageType.PUBLICUSER);
-                                    textRet = HttpHelper.HttpResponseMountResponse(new Response()
-                                    { message = " ", success = true });
+                                    int tamC = cmd.cmd.Trim().Split(' ').Length;
+                                    if(tamC == 5)
+                                    {
+                                        string nickPubPri = cmd.cmd.Trim().Split(' ')[1];
+                                        string nickDestPubPri = cmd.cmd.Trim().Split(' ')[2];
+                                        string roomPubPri = cmd.cmd.Trim().Split(' ')[3];
+                                        string msgPubPri = cmd.cmd.Trim().Split(' ')[4];
+                                        serverProcess.SendMessageParticular(nickPubPri, nickDestPubPri, roomPubPri, msgPubPri.Replace("#", " "), MessageType.PUBLICUSER);
+                                        textRet = HttpHelper.HttpResponseMountResponse(new Response()
+                                        { message = " ", success = true });
+                                    }
+                                    else
+                                    {
+                                        textRet = HttpHelper.HttpResponseMountResponse(new Response()
+                                        { message = "Erro! Comando faltando parametros. Digite 'HELP CNOTICE' para ajuda.", success = false });
+                                    }
                                     break;
                                 case Commands.JOIN:
                                     string nickJoin = cmd.cmd.Trim().Split(' ')[1];
@@ -80,7 +89,7 @@ namespace ServidorChat
                                     }
                                     else
                                         textRet = HttpHelper.HttpResponseMountResponse(new Response()
-                                        { message = "Erro. Please inform the room.", success = false });
+                                        { message = "Erro. Por favor informe a sala.", success = false });
                                     break;
                                 case Commands.KICK:
                                     break;
@@ -90,7 +99,7 @@ namespace ServidorChat
                                     break;
                                 case Commands.NICK:
                                     string nickUser = cmd.cmd.Trim().Split(' ')[1];
-                                    Response resNick = serverProcess.Nick(nickUser, client);
+                                    Response resNick = serverProcess.Nick(nickUser);
                                     textRet = HttpHelper.HttpResponseMountResponse(resNick);
                                     break;
                                 case Commands.OPER:
@@ -104,7 +113,7 @@ namespace ServidorChat
                                 case Commands.PASS:
                                     break;
                                 case Commands.PRIVMSG:
-                                    int tamP = cmd.cmd.Split(' ').Length;
+                                    int tamP = cmd.cmd.Trim().Split(' ').Length;
                                     if(tamP == 5)
                                     {
                                         string nickSenderPri = cmd.cmd.Trim().Split(' ')[1];
@@ -118,12 +127,12 @@ namespace ServidorChat
                                     else
                                     {
                                         textRet = HttpHelper.HttpResponseMountResponse(new Response()
-                                        { message = "Erro. Command missing parameters. Type 'HELP PUBMSG' for help.", success = false });
+                                        { message = "Erro. Comando faltando parametros. Digite 'HELP PRIVMSG' para ajuda.", success = false });
                                     }
 
                                     break;
                                 case Commands.PUBMSG:
-                                    int tam = cmd.cmd.Split(' ').Length;
+                                    int tam = cmd.cmd.Trim().Split(' ').Length;
                                     if (tam == 4)
                                     {
                                         string roomPub = cmd.cmd.Trim().Split(' ')[1];
@@ -136,7 +145,7 @@ namespace ServidorChat
                                     else
                                     {
                                         textRet = HttpHelper.HttpResponseMountResponse(new Response()
-                                        { message = "Erro. Command missing parameters. Type 'HELP PUBMSG' for help.", success = false });
+                                        { message = "Erro. Comando faltando parâmetroa. Digite 'HELP PUBMSG' para ajuda.", success = false });
                                     }
                                     break;
                                 case Commands.CREATEROOM:
@@ -147,7 +156,7 @@ namespace ServidorChat
                                     string nickLieveserver = cmd.cmd.Trim().Split(' ')[1];
                                     serverProcess.LeaveServer(nickLieveserver);
                                     textRet = HttpHelper.HttpResponseMountResponse(new Response() { 
-                                    message = "User disconnectd from server!", success = true });
+                                    message = "Usuário desconectado do servidor!", success = true });
                                     break;
                                 case Commands.WAITMESSAGE:
                                     string nicWait = cmd.cmd.Trim().Split(' ')[1];
