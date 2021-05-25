@@ -14,3 +14,7 @@ a solução.
 
 Basta ir até a pasta do projeto e clicar com o botão direito do mouse na solução que o projeto irá abrir no visual studio, Então basta selecionar a opção release, clicar com o 
 botão direito do mouse na solução e clicar em compilar. Assim temos a pasta bim/Realese, onde estará o executável do servidor. 
+
+### Teste
+
+Para executar os testes, depois de ter compilado o projeto ServidorChat no modo release, clicar com o botão direito do mouse no projeto TestChat e clicar em executar teste.
