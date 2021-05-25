@@ -48,6 +48,7 @@ namespace ServidorChat.Essencial.Chat
                         stream.Write(response, 0, response.Length);
                     }
                 }
+                roomMessages.Add(message);
             }
             catch (Exception ex)
             {
@@ -75,6 +76,7 @@ namespace ServidorChat.Essencial.Chat
                         stream.Write(response, 0, response.Length);
                     }
                 }
+                roomMessages.Add(message);
             }
             catch (Exception ex)
             {
