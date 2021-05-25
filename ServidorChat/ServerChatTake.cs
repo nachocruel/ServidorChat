@@ -5,11 +5,11 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
-using ServidorChat.Essencial.Log;
 using System.Threading;
 using ServidorChat.Essencial.Chat;
 using ServidorChat.Essencial;
 using Newtonsoft.Json;
+using ServidorChat.Essencial.LogChat;
 
 namespace ServidorChat
 {
@@ -36,7 +36,7 @@ namespace ServidorChat
                     string msgClientConnect = String.Format("Conexão do cliente: {0}",
                         client.Client.RemoteEndPoint.ToString());
                     Console.WriteLine(msgClientConnect);
-                    logPrint.print(msgClientConnect, Essencial.LogType.INFO);
+                    logPrint.print(msgClientConnect, LogType.INFO);
                     data = String.Empty;
 
                     Byte[] bytes = new Byte[4000];
@@ -170,12 +170,12 @@ namespace ServidorChat
             }
             catch (SocketException se)
             {
-                logPrint.print(se, Essencial.LogType.ERROR);
+                logPrint.print(se, LogType.ERROR);
             }
             finally
             {
                 server.Stop();
-                logPrint.print("O servidor parou", Essencial.LogType.INFO);
+                logPrint.print("O servidor parou", LogType.INFO);
             }
         }
     }

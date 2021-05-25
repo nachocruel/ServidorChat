@@ -1,4 +1,4 @@
-﻿using ServidorChat.Essencial.Log;
+﻿using ServidorChat.Essencial.LogChat;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -61,17 +61,24 @@ namespace ServidorChat.Essencial.Chat
         /// <param name="message"></param>
         public void notifyUserPublic(Message message)
         {
-            string httpMsg = HttpHelper.HttpResponseMountMessage(message);
-            byte[] response = new byte[4000];
-            Array.Copy(Encoding.UTF8.GetBytes(httpMsg), 0, response, 0, Encoding.UTF8.GetBytes(httpMsg).Length);
-            Console.WriteLine(httpMsg);
-            foreach (var user in users)
+            try
             {
-                if (user.GetUserConnection() != null)
+                string httpMsg = HttpHelper.HttpResponseMountMessage(message);
+                byte[] response = new byte[4000];
+                Array.Copy(Encoding.UTF8.GetBytes(httpMsg), 0, response, 0, Encoding.UTF8.GetBytes(httpMsg).Length);
+                Console.WriteLine(httpMsg);
+                foreach (var user in users)
                 {
-                    NetworkStream stream = user.GetUserConnection().GetStream();
-                    stream.Write(response, 0, response.Length);
+                    if (user.GetUserConnection() != null)
+                    {
+                        NetworkStream stream = user.GetUserConnection().GetStream();
+                        stream.Write(response, 0, response.Length);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                logPrint.print(ex, LogType.ERROR);
             }
         }
 
@@ -81,23 +88,31 @@ namespace ServidorChat.Essencial.Chat
         /// <param name="message"></param>
         public void notifyPrivate(Message message)
         {
-            User uAuthor = users.Find(u => u.nickName == message.userAuthor.nickName);
-            User uDest = users.Find(u => u.nickName == message.userDest.nickName);
-            string httpMsg = HttpHelper.HttpResponseMountMessage(message);
-            byte[] response = new byte[4000];
-            Array.Copy(Encoding.UTF8.GetBytes(httpMsg), 0, response, 0, Encoding.UTF8.GetBytes(httpMsg).Length);
-            Console.WriteLine(httpMsg);
             
-            foreach (var user in users)
+
+            try
             {
-                if(user.nickName == uAuthor.nickName || user.nickName == uDest.nickName)
+                User uAuthor = users.Find(u => u.nickName == message.userAuthor.nickName);
+                User uDest = users.Find(u => u.nickName == message.userDest.nickName);
+                string httpMsg = HttpHelper.HttpResponseMountMessage(message);
+                byte[] response = new byte[4000];
+                Array.Copy(Encoding.UTF8.GetBytes(httpMsg), 0, response, 0, Encoding.UTF8.GetBytes(httpMsg).Length);
+                Console.WriteLine(httpMsg);
+                foreach (var user in users)
                 {
-                    if (user.GetUserConnection() != null)
+                    if (user.nickName == uAuthor.nickName || user.nickName == uDest.nickName)
                     {
-                        NetworkStream stream = user.GetUserConnection().GetStream();
-                        stream.Write(response, 0, response.Length);
+                        if (user.GetUserConnection() != null)
+                        {
+                            NetworkStream stream = user.GetUserConnection().GetStream();
+                            stream.Write(response, 0, response.Length);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                logPrint.print(ex, LogType.ERROR);
             }
         }
     }
