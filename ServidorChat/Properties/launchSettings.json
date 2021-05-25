@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ServidorChat": {
+      "commandName": "Project",
+      "commandLineArgs": "http://localhost:5000/"
+    }
+  }
+}
