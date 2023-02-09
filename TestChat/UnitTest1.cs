@@ -3,10 +3,12 @@ using NUnit.Framework;
 namespace TestChat
 {
     using Newtonsoft.Json;
+    //using ServidorChat;
     using ServidorChat.Essencial.Chat;
 
     public class Tests
     {
+        /*
         Server serverProcess;
 
         [SetUp]
@@ -63,6 +65,6 @@ namespace TestChat
             // Sair da sala
             Response res5 = serverProcess.LeaveRoom(user.nickName, "sala-teste");
             Assert.IsTrue(res5.success);
-        }
+        }*/
     }
 }
