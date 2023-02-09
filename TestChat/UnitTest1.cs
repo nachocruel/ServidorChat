@@ -22,7 +22,7 @@ namespace TestChat
         [Test]
         public void TestAdmin()
         {   
-            // Testa o retorno de informação do ADMIN
+            // Testa o retorno de informaï¿½ï¿½o do ADMIN
             var ret = serverProcess.ListAdministrator("EDVAN");
             Assert.IsTrue(((Response)ret).success);
         }
@@ -30,7 +30,7 @@ namespace TestChat
         [Test]
         public void TestAdminNull()
         {
-            // Teste Admin não existente
+            // Teste Admin nï¿½o existente
             var ret = serverProcess.ListAdministrator("Mario");
             Assert.IsFalse(!ret.success);
         }
@@ -45,12 +45,12 @@ namespace TestChat
         [Test]
         public void NickAndJoinUserAndPartRoom()
         {
-            // Usuário ainda não existe
+            // Usuï¿½rio ainda nï¿½o existe
             var resp = serverProcess.Nick("Cassio");
             Assert.IsTrue(resp.success);
             var resp2 = serverProcess.Nick("Cassio");
 
-            // Usuário já está no server, ret deve ser falso
+            // Usuï¿½rio jï¿½ estï¿½ no server, ret deve ser falso
             Assert.IsFalse(resp2.success);
 
             var resp3 = serverProcess.Nick("Roger");
