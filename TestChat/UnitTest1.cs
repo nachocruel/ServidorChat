@@ -3,7 +3,6 @@ using NUnit.Framework;
 namespace TestChat
 {
     using Newtonsoft.Json;
-    using ServidorChat;
     using ServidorChat.Essencial.Chat;
 
     public class Tests
